@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <title>Boiler Monitor Application</title>
+  <!--Adjusting the page on mobile screen  -->
+  <meta name="viewport" content="width=device-width, initial-scale=1,
+  maximum-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/jquery.mobile-1.3.1.min.css" />
+  <script src="scripts/jquery-1.8.3.min.js"></script>
+  <script src="scripts/jquery.mobile-1.3.1.min.js"></script>
+  <script src="scripts/userForm.js"></script>
+</head>
+<body>
+<!-- Password -->
+<div data-role="page" id="pagePassword">
+    <div data-role="header">
+        <h1>Password Entry</h1>
+    </div>
+    <div data-role="content">
+        Password : <input type="password" id="passcode"></input>
+        <a data-role="button" id="btnEnter" type ="submit" onclick="verifyPassword()">Enter</a>
+        <p><i>The default password is "password".</i></p>
+    </div>
+</div>
+<!-- Main Menu -->
+<div data-role="page" id="pageMenu">
+    <div data-role="header">
+        <h1>Main Menu</h1>
+    </div>
+    <div data-role="controlgroup">
+        <a href="#pagePassword" data-role="button">Password Entry</a>
+        <a href="#pageBoilerInfo" data-role="button">Boiler Information</a>
+        <a href="#pageRecords" data-role="button">Record Boiler Metrics</a>
+        <a href="#pageGraph" data-role="button">Graph Boiler Data</a>
+        <a href="#pageAdvice" data-role="button">Boiler Recommendations</a>
+    </div>
+</div>
+ <!-- Boiler Information/Edit -->
+<div data-role="page" id="pageBoilerInfo">
+    <div data-role="header">
+        <a href="#pageMenu" data-role="button" data-icon="bars"
+		data-iconpos="left" data-inline="true">Menu</a>
+        <h1>Boiler Information</h1>
+    </div>
+    <div data-role="content">
+        <div>
+            <h2>Currend Boiler Information</h2>
+            <p>Boiler ID: <strong id="boilerID">None</strong></p>
+            <p>Date of Purchase: <strong id="purchaseDate"></strong></p>
+            <p>Maximum Pressure: <strong id="maxPressure"></strong> PSI</p>
+            <p>Maximum Temperature: <strong id="maxTemp"></strong> &#8457;</p>
+            <p>Password: <strong id="displayPassword"></strong></p>
+        </div>
+        <br>
+        <br>
+        <div>
+            <h2>Edit Boiler Information</h2>
+            <form id="frmUserForm" action="">
+                <div data-role="fieldcontain">
+                    <label for="txtBoilerID">Boiler ID:</label>
+                    <input type="text" id="txtBoilerID" name="txtBoilerID" data-mini="false" value="" required>
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="datePurchaseDate">Date of Purchase:</label>
+                    <input type="date" id="datePurchaseDate" name="datePurchaseDate" data-mini="false" value="" required>
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="numberMaxPressure">Maximum Pressure:</label>
+                    <input type="number" id="numberMaxPressure" name="numberMaxPressure" data-mini="false" value="" required>
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="numberMaxTemp">Maximum Temperature:</label>
+                    <input type="number" id="numberMaxTemp" name="numberMaxTemp" data-mini="false" value="" required>
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="changePassword">Edit Password:</label>
+                    <input type="password" id="changePassword" name="changePassword" data-mini="false" value="" required>
+                </div>
+                <input type="submit" id="btnUserUpdate" data-icon="check" data-iconpos="left" value="Update" data-inline="true" onclick="getBoilerForm()">
+            </form>
+        </div>
+    </div>
+</div>
+ <!-- Boiler Metrics -->
+<div data-role="page" id="pageRecords">
+    <div data-role="header">
+        <a href="#pageMenu" data-role="button" data-icon="bars"
+		data-iconpos="left" data-inline="true">Menu</a>
+        <h1>Record Boiler Metrics</h1>
+    </div>
+    <div data-role="content">
+        <!--Boiler's Info Section-->
+        <div data-role="fieldcontain" id="divUserSection">
+        </div>
+        <h3 align="center">Previous Boiler Records</h3>
+        <div data-role="fieldcontain">
+            <!--Records Table-->
+            <table id="tblRecords" class="ui-responsive" table-stroke>
+            </table>
+        </div>
+        <div data-role="fieldcontain">
+            <a href="#pageNewRecordForm" id="btnAddRecord" data-role="button" data-icon="plus">Add New Record</a>
+            <a href="#" id="btnClearHistory" data-role="button" data-icon="delete">Clear History</a>
+        </div>
+    </div>
+</div>
+<!-- New Record Form -->
+<div data-role="page" id="pageNewRecordForm">
+    <div data-role="header">
+        <a href="#pageMenu" data-role="button" data-icon="bars"
+		data-iconpos="left" data-inline="true">Menu</a>
+        <h1>Record New Pressure and Temperature</h1>
+    </div>
+    <div data-role="content">
+        <form id="frmNewRecordForm" action="">
+            <div data-role="fieldcontain">
+                <div data-role="fieldcontain">
+                    <label for="numberRecordPressure">Record Pressure:</label>
+                    <input type="number" placeholder="0" id="numberRecordPressure" data-mini="false" value="">
+                </div>
+                <div data-role="fieldcontain">
+                    <label for="numberRecordTemp">Record Temperature:</label>
+                    <input type="number" placeholder="0" id="numberRecordTemp" data-mini="false" value="">
+                </div>
+            </div>
+            <input type="submit" id="btnSubmitRecord" value="Add">
+        </form>
+    </div>
+ <!-- Graph Page -->
+<div data-role="page" id="pageGraph" class="test">
+    <div data-role="header">
+        <a href="#pageMenu" data-role="button" data-icon="bars"
+		data-iconpos="left" data-inline="true">Menu</a>
+        <h1>Boiler Graph Data</h1>
+    </div>
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <h3 class="panel-title">Boiler Data</h3>
+        </div>
+        <div class="panel-body">
+            <canvas id="GraphCanvas" width="500" height="500" style="border:1px solid #000000;"></canvas>
+        </div>
+    </div>
+</div>
+<!-- Advice Page -->
+<div data-role="page" id="pageAdvice">
+    <div data-role="header">
+        <a href="#pageMenu" data-role="button" data-icon="bars"
+		data-iconpos="left" data-inline="true">Menu</a>
+        <h1>Boiler Recommendations</h1>
+    </div>
+    <div data-role="content">
+        <canvas id="AdviceCanvas" witch="550" height="550" style="border:1px solid #000000;"></canvas>
+    </div>
+</div>
+</body>
+</html>
+
